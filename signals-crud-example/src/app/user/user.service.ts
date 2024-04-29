@@ -1,20 +1,18 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core';
-import { User } from '../../user/user.model';
+import { HttpClient } from '@angular/common/http';
+import { Injectable} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { User } from '../../user/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public http = inject(HttpClient);
+  constructor(private http: HttpClient) {}
 
-  public userURL = 'http://localhost:3000/users';
+  public userUrl = 'http://localhost:3000/users';
 
-  private user$ = this.http.get<User[]>(this.userURL);
+  private users$ = this.http.get<User[]>(this.userUrl);
 
-  public users = toSignal(this.user$, { initialValue: [] as User [] })
-
-  constructor() { }
+  public users = toSignal(this.users$, { initialValue: [] as User[] });
 }
